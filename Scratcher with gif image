@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:scratcher/scratcher.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Scratch(),
+    );
+  }
+}
+
+class Scratch extends StatefulWidget {
+  const Scratch({Key? key}) : super(key: key);
+
+  @override
+  State<Scratch> createState() => _ScratchState();
+}
+
+class _ScratchState extends State<Scratch> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+          child: Scratcher(
+              brushSize: 60,
+              threshold: 100,
+              color: Colors.white,
+              onChange: (value) => print("Scratch progress: $value%"),
+              onThreshold: () => print("Threshold reached, you won!"),
+              child: Image.asset(
+                  'assets/images/lord-krishna-5863584-4921684.gif'))),
+    );
+  }
+}

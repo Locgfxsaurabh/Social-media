@@ -1,0 +1,101 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Post(),
+    );
+  }
+}
+
+class Post extends StatefulWidget {
+  const Post({super.key});
+
+  @override
+  State<Post> createState() => _PostState();
+}
+
+class _PostState extends State<Post> {
+  bool is_pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.orange.shade300,
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(
+                    'https://images.pexels.com/photos/1834399/pexels-photo-1834399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+                fit: BoxFit.cover)),
+        alignment: Alignment.center,
+        child: GestureDetector(
+          onTapDown: (_) {
+            setState(() {
+              is_pressed = true;
+            });
+          },
+          onTapUp: (_) {
+            setState(() {
+              is_pressed = false;
+            });
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+              child: AnimatedContainer(
+                height: 300,
+                width: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            'https://images.pexels.com/photos/268883/pexels-photo-268883.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+                        fit: BoxFit.cover,
+                        opacity: 0.02),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4),
+                        blurRadius: 25,
+                        spreadRadius: -5,
+                      )
+                    ],
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.cyan, Colors.redAccent]),
+                    color: Colors.red.withOpacity(is_pressed ? 0.4 : 0.20),
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(width: 5, color: Colors.white30)),
+                duration: const Duration(milliseconds: 10),
+                child: const Center(
+                    child: Text(
+                  'Mountain',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w200,
+                      color: Colors.black),
+                )),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

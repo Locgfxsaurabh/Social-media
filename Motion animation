@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+class CircularAnimation extends StatefulWidget {
+  const CircularAnimation({super.key});
+  @override
+  State<CircularAnimation> createState() => _CircularAnimationState();
+}
+class _CircularAnimationState extends State<CircularAnimation> {
+  double secondturns=0;
+    List<dynamic> mycolor=[
+    Colors.red,
+    Colors.green,
+    Colors.yellow,
+    Colors.blue,
+    Colors.orange,
+    Colors.cyan,
+    Colors.pink,
+    Colors.indigoAccent,
+  ];
+    @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        secondturns=10;
+      });
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return    Scaffold(
+      backgroundColor: Colors.black,
+      body:Stack(children:List.generate(40, (index) =>  AnimatedRotation(
+        turns: secondturns,
+        duration:  Duration(seconds: 20+index*4),
+        child: Center(
+            child:Row(children: [
+               SizedBox(width:MediaQuery.of(context).size.width/2),
+              Row(children:
+              List.generate(8, (index) =>Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: Container(
+                  height: 12+index*2.0,
+                  width: 12+index*2.0,
+                  decoration:  BoxDecoration(
+                    border: Border.all( color: mycolor[index]),
+                      shape: BoxShape.circle,
+                  )))))])))) )
+    );
+  }
+}
